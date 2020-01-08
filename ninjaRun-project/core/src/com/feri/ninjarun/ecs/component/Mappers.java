@@ -18,6 +18,9 @@ public final class Mappers {
     public static final ComponentMapper<MovementComponentXYR> MOVEMENT =
             ComponentMapper.getFor(MovementComponentXYR.class);
 
+    public static final ComponentMapper<TransformComponent> TRANSFORM =
+            ComponentMapper.getFor(TransformComponent.class);
+
     public static final ComponentMapper<TextureComponent> TEXTURE =
             ComponentMapper.getFor(TextureComponent.class);
 

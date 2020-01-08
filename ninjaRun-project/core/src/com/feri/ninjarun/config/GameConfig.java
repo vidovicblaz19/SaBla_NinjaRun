@@ -10,6 +10,7 @@ public class GameConfig {
 
     public static final float SKIER_WIDTH = 48f;
     public static final float SKIER_HEIGHT = 64f;
+    public static final float SKIER_HEIGHT_TRANSFORM_MULTIPLIER = 0.5f;
     public static final float TREE_WIDTH_MIN = 32f;
     public static final float TREE_HEIGHT_MIN = 32f;
     public static final float TREE_WIDTH_MAX = 128f;

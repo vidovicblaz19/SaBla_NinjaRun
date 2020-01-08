@@ -8,16 +8,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.config.GameConfig;
+import com.feri.ninjarun.ecs.component.DimensionComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;
 import com.feri.ninjarun.ecs.component.SkierComponent;
+import com.feri.ninjarun.ecs.component.TransformComponent;
 
 
 public class SkierInputSystem extends IteratingSystem {
 
     private static final Family FAMILY = Family.all(
             SkierComponent.class,
-            MovementComponentXYR.class
+            MovementComponentXYR.class,
+            TransformComponent.class,
+            DimensionComponent.class
     ).get();
 
     public SkierInputSystem() {
@@ -29,8 +33,12 @@ public class SkierInputSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         MovementComponentXYR movement = Mappers.MOVEMENT.get(entity);
+        TransformComponent transform = Mappers.TRANSFORM.get(entity);
+        DimensionComponent dimension = Mappers.DIMENSION.get(entity);
 
         //movement.xSpeed = 0;
+        transform.newHeightMultiplier = 1f;
+        dimension.height = GameConfig.SKIER_HEIGHT;
 
         movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime;
 
@@ -43,6 +51,9 @@ public class SkierInputSystem extends IteratingSystem {
                 movement.ySpeed = GameConfig.JUMP_SPEED * deltaTime;
                 GameManager.INSTANCE.incJumpCounter();
             }
+        }else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            transform.newHeightMultiplier = GameConfig.SKIER_HEIGHT_TRANSFORM_MULTIPLIER;
+            dimension.height = GameConfig.SKIER_HEIGHT * transform.newHeightMultiplier;
         }
 
     }
