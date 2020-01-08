@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Logger;
+import com.feri.ninjarun.config.GameConfig;
 
 /**
  * Info/Configuration for {@link DebugCameraController}.
@@ -21,6 +22,7 @@ public class DebugCameraInfo {
     private static final String MAX_ZOOM_IN = "maxZoomIn";
     private static final String MAX_ZOOM_OUT = "maxZoomOut";
     private static final String MOVE_SPEED = "moveSpeed";
+    private static final String RUNNER_SPEED = "runnerSpeed";
     private static final String ZOOM_SPEED = "zoomSpeed";
 
     private static final String LEFT_KEY = "leftKey";
@@ -44,6 +46,8 @@ public class DebugCameraInfo {
     private static final int DEFAULT_RESET_KEY = Input.Keys.BACKSPACE;
     private static final int DEFAULT_LOG_KEY = Input.Keys.ENTER;
 
+    //hitrost premikanja kamere v desno
+    private static final float FOLLOW_RUNNER = GameConfig.MAX_SKIER_X_SPEED;
     private static final float DEFAULT_MOVE_SPEED = 80.0f;
     private static final float DEFAULT_ZOOM_SPEED = 2.0f;
     private static final float DEFAULT_MAX_ZOOM_IN = 0.25f;
@@ -54,6 +58,7 @@ public class DebugCameraInfo {
     // == attributes ==
     private float maxZoomIn;
     private float maxZoomOut;
+    private float followRunner;
     private float moveSpeed;
     private float zoomSpeed;
 
@@ -108,6 +113,8 @@ public class DebugCameraInfo {
             resetKey = getInputKeyValue(root, RESET_KEY, DEFAULT_RESET_KEY);
             logKey = getInputKeyValue(root, LOG_KEY, DEFAULT_LOG_KEY);
 
+            followRunner = root.getFloat(RUNNER_SPEED, FOLLOW_RUNNER);
+
         } catch (Exception e) {
             log.error("Error loading " + FILE_PATH + " using defaults.", e);
             setupDefaults();
@@ -129,6 +136,8 @@ public class DebugCameraInfo {
         zoomOutKey = DEFAULT_ZOOM_OUT_KEY;
         resetKey = DEFAULT_RESET_KEY;
         logKey = DEFAULT_LOG_KEY;
+
+        followRunner = FOLLOW_RUNNER;
     }
 
     // == public methods ==
@@ -179,6 +188,10 @@ public class DebugCameraInfo {
     public boolean isLogPressed() {
         return Gdx.input.isKeyPressed(logKey);
     }
+
+    public float getFollowRunner() { return followRunner; }
+
+    public void setFollowRunner(float followRunner) { this.followRunner = followRunner; }
 
     @Override
     public String toString() {

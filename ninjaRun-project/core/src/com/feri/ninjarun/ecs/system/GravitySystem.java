@@ -32,6 +32,7 @@ public class GravitySystem extends IteratingSystem {
         position.y -= (gravity.yAcceleration * deltaTime + movement.ySpeed) * deltaTime;
         if(position.y <= 0){
             movement.ySpeed = 0;
+            position.y = 0;
             GameManager.INSTANCE.setJumpCounter(0);
         }
         movement.ySpeed = -gravity.yAcceleration * deltaTime + movement.ySpeed;

@@ -49,6 +49,7 @@ public class EntityFactorySystem extends EntitySystem {
 
     public Entity createSkier() {
         PositionComponent position = engine.createComponent(PositionComponent.class);
+        position.x = 100f;
 
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
         dimension.width = GameConfig.SKIER_WIDTH;
@@ -57,11 +58,10 @@ public class EntityFactorySystem extends EntitySystem {
         BoundsComponent bounds = engine.createComponent(BoundsComponent.class);
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width, dimension.height);
-
-
+        
         MovementComponentXYR movement = engine.createComponent(MovementComponentXYR.class);
         //
-        GravityComponent gravitiy = engine.createComponent(GravityComponent.class);
+        GravityComponent gravity = engine.createComponent(GravityComponent.class);
 
         SkierComponent rocket = engine.createComponent(SkierComponent.class);
 
@@ -79,7 +79,7 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(bounds);
         entity.add(movement);
         //
-        entity.add(gravitiy);
+        entity.add(gravity);
         entity.add(rocket);
         entity.add(worldWrap);
         entity.add(texture);

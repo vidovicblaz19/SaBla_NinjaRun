@@ -28,14 +28,10 @@ public class WorldWrapSystem extends IteratingSystem {
         DimensionComponent dimensionComponent = Mappers.DIMENSION.get(entity);
         MovementComponentXYR movement = Mappers.MOVEMENT.get(entity);
 
-        if (position.x >= GameConfig.WIDTH-dimensionComponent.width) {
-            position.x = GameConfig.WIDTH-dimensionComponent.width;
-        } else if (position.x < 0) {
-            position.x = 0;
-        }
-        if (position.y <= 0) {
-            position.y = 0;
-
-        }
+        //if (position.x >= GameConfig.WIDTH-dimensionComponent.width) {
+        //    position.x = GameConfig.WIDTH-dimensionComponent.width;
+        //} else if (position.x < 0) {
+        //    position.x = 0;
+        //}
     }
 }

@@ -78,6 +78,7 @@ public class DebugCameraController {
 
         float moveSpeed = info.getMoveSpeed() * delta;
         float zoomSpeed = info.getZoomSpeed() * delta;
+        float followRunnerSpeed = info.getFollowRunner() * delta;
 
         // move control
         if (info.isLeftPressed()) {
@@ -113,7 +114,8 @@ public class DebugCameraController {
         if (info.isLogPressed()) {
             logDebug();
         }
-
+        //move right by default
+        moveRight(followRunnerSpeed);
     }
 
     // == private methods ==

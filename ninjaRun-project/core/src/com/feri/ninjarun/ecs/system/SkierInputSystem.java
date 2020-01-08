@@ -30,10 +30,12 @@ public class SkierInputSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         MovementComponentXYR movement = Mappers.MOVEMENT.get(entity);
 
-        movement.xSpeed = 0;
+        //movement.xSpeed = 0;
+
+        movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime;
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime;
+            movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED*2 * deltaTime;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             movement.xSpeed = -GameConfig.MAX_SKIER_X_SPEED * deltaTime;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
