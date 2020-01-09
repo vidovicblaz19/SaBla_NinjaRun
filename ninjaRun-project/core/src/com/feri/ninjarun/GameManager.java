@@ -11,15 +11,24 @@ public class GameManager {
     int result;
     int health;
     int jumpCounter;
+    boolean resetRunner;
 
     public void resetResult() {
         result = 0;
-        health = 50;
+        health = 1;
         jumpCounter = 0;
+        resetRunner = true;
     }
 
     public boolean isGameOver() {
         return getHealth() <= 0;
+    }
+    public boolean isGameWon() {
+        if(getHealth() > 0 && result > 5540){
+            if (result > getBestResult()) setBestResult(result);
+            return true;
+        }
+        return false;
     }
 
     public int getJumpCounter() {
@@ -57,8 +66,16 @@ public class GameManager {
         PREFS = Gdx.app.getPreferences(GameManager.class.getSimpleName());
         userID = "saBla";
         jumpCounter = 0;
+        resetRunner = true;
     }
 
+    public boolean isResetRunner() {
+        return resetRunner;
+    }
+
+    public void setResetRunner(boolean resetRunner) {
+        this.resetRunner = resetRunner;
+    }
 
     public void setBestResult(int result) {
         PREFS.putInteger(RESULT_BEST, result);

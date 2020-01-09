@@ -129,43 +129,4 @@ public class TiledSystem extends EntitySystem {
         mapRenderer.render();
     }
 
-    public boolean colideWith(Rectangle rectangle) {
-        tmpArea.set(rectangle.x - tileWidth, rectangle.y - tileHeight, rectangle.width + tileWidth * 2, rectangle.height + tileHeight * 2);
-        int i = 0; //init tiled checked
-        if (GameConfig.debug) { //area that will be searched
-            for (BoundsComponent bc : debug) {
-                bc.rectangle.set(0, 0, tileWidth, tileHeight);
-            }
-            debug.get(i++).rectangle.set(tmpArea);//show area
-        }
-        boolean result = false;
-        float dx = 0;
-        float dy = 0;
-        int iy = MathUtils.clamp((int) (tmpArea.y / tileHeight) + 1, 0, heightInt);
-        int ix;
-        do {
-            ix = MathUtils.clamp((int) (tmpArea.x / tileWidth), 0, widthInt);
-            dx = 0;
-            do {
-                if (GameConfig.debug) {
-                    tmp.set(ix * tileWidth, iy * tileHeight, tileWidth, tileHeight);
-                    debug.get(i++).rectangle.set(tmp);
-                }
-                if (colideTileLayer.getCell(ix, iy) != null) {
-                    tmp.set(ix * tileWidth, iy * tileHeight, tileWidth, tileHeight);
-                    if (tmp.overlaps(rectangle)) {
-                        colideTileLayer.setCell(ix, iy, null);
-                        GameManager.INSTANCE.incResult();
-                        result = true;
-                    }
-                }
-                ix++;
-                dx += tileWidth;
-            } while (dx < tmpArea.width);
-            iy++;
-            dy += tileHeight;
-        } while (dy < tmpArea.height);
-        return result;
-    }
-
 }

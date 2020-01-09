@@ -60,6 +60,14 @@ public class HUDRenderSystem extends EntitySystem {
             font.draw(batch, layout, endX, endY);
         }
 
+        if(GameManager.INSTANCE.isGameWon()){
+            font.setColor(Color.GREEN);
+            layout.setText(font, "WINNER! You made it to the end!");
+            float endX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
+            float endY = (hudViewport.getWorldHeight() + layout.height) / 2 - layout.height;
+            font.draw(batch, layout, endX, endY);
+        }
+
         batch.end();
     }
 }

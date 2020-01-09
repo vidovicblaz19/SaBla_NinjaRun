@@ -28,6 +28,7 @@ import com.feri.ninjarun.ecs.system.GravitySystem;
 import com.feri.ninjarun.ecs.system.HUDRenderSystem;
 import com.feri.ninjarun.ecs.system.MovementSystem;
 import com.feri.ninjarun.ecs.system.RenderSystem;
+import com.feri.ninjarun.ecs.system.ResetRunnerSystem;
 import com.feri.ninjarun.ecs.system.SkierInputSystem;
 import com.feri.ninjarun.ecs.system.WorldWrapSystem;
 import com.feri.ninjarun.ecs.system.debug.DebugCameraSystem;
@@ -86,6 +87,8 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new GravitySystem());
         engine.addSystem(new SkierInputSystem());
         engine.addSystem(new CameraMovementSystem());
+        engine.addSystem(new ResetRunnerSystem());
+
         engine.addSystem(new RenderSystem(batch, viewport));
         engine.addSystem(new StartUpSystem());
         engine.addSystem(new CleanUpSystem());
