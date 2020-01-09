@@ -29,6 +29,7 @@ import com.feri.ninjarun.ecs.system.HUDRenderSystem;
 import com.feri.ninjarun.ecs.system.MovementSystem;
 import com.feri.ninjarun.ecs.system.RenderSystem;
 import com.feri.ninjarun.ecs.system.ResetRunnerSystem;
+import com.feri.ninjarun.ecs.system.ShurikenSpawnSystem;
 import com.feri.ninjarun.ecs.system.SkierInputSystem;
 import com.feri.ninjarun.ecs.system.WorldWrapSystem;
 import com.feri.ninjarun.ecs.system.debug.DebugCameraSystem;
@@ -82,6 +83,7 @@ public class GameScreen extends ScreenAdapter {
         //engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new MovementSystem());
+        engine.addSystem(new ShurikenSpawnSystem());
         engine.addSystem(new CollisionSystem());
         //-----
         engine.addSystem(new GravitySystem());
@@ -113,14 +115,14 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
         if (Gdx.input.isKeyPressed(Input.Keys.R)) { //resetam vse na zacetek
             GameManager.INSTANCE.resetResult();
-            log.debug("pritisnjen rrrrr");
 
         }
         GdxUtils.clearScreen();
-        if (GameManager.INSTANCE.isGameOver())
-            engine.update(0);
-        else
+        if (GameManager.INSTANCE.isGameOver()){
+            engine.update(0);}
+        else{
             engine.update(delta);
+        }
 
         // if (GameManager.INSTANCE.isGameOver()) {
         //     game.setScreen(new MenuScreen(game));

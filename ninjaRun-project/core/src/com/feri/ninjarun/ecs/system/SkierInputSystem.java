@@ -12,6 +12,7 @@ import com.feri.ninjarun.ecs.component.DimensionComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;
 import com.feri.ninjarun.ecs.component.PositionComponent;
+import com.feri.ninjarun.ecs.component.ShurikenComponent;
 import com.feri.ninjarun.ecs.component.SkierComponent;
 import com.feri.ninjarun.ecs.component.TransformComponent;
 

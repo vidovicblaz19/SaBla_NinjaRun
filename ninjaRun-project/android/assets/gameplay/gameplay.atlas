@@ -1,21 +1,28 @@
 
 gameplay.png
-size: 256,128
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 checkpoint
   rotate: false
-  xy: 179, 45
+  xy: 251, 45
   size: 50, 81
   orig: 50, 81
   offset: 0, 0
   index: -1
 rock128
   rotate: false
-  xy: 131, 28
+  xy: 303, 94
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+shuriken
+  rotate: false
+  xy: 179, 56
+  size: 70, 70
+  orig: 70, 70
   offset: 0, 0
   index: -1
 skiier64

@@ -44,7 +44,9 @@ public class GameManager {
     }
 
     public void damage() {
-        health--;
+        if(health>0) {
+            health--;
+        }
         if (health == 0) {
             if (result > getBestResult()) setBestResult(result);
         }

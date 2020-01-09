@@ -27,6 +27,9 @@ public final class Mappers {
     public static final ComponentMapper<ObstacleComponent> OBSTACLE =
             ComponentMapper.getFor(ObstacleComponent.class);
 
+    public static final ComponentMapper<ShurikenComponent> SHURIKEN =
+            ComponentMapper.getFor(ShurikenComponent.class);
+
     public static final ComponentMapper<TextureComponent> TEXTURE =
             ComponentMapper.getFor(TextureComponent.class);
 

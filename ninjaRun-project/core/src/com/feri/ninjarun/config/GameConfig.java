@@ -23,11 +23,11 @@ public class GameConfig {
     public static final float GRAVITY = 24f; //m/s2
     public static final float JUMP_SPEED = 70f*10f; //m/s2
     public static float NINJA_INCREASE_SPEED_INTERVAL = 0.007f;
-    public static final float TREE_SPAWN_TIME = 1.2f;
+    public static final float SHURIKEN_SPAWN_TIME = 1f;
     public static final float TREE_SPEED_X_MIN = 3f;
     public static final float ROCK_SPAWN_TIME = 1.2f;
     public static final float ROCK_SPEED_X_MIN = 3.8f;
-    public static final float CHECKPOINT_SIZE = 48f;
+    public static final float SHURIKEN_SIZE = 52f;
     public static final float CHECKPOINT_SPAWN_TIME = 0.6f;
 
     // public static float WIDTH = 480f;
@@ -39,7 +39,7 @@ public class GameConfig {
 
       //could be important
       public static float WIDTH = 70f*50;
-      public static float HEIGHT = 70f*20;
+      public static float HEIGHT = 70f*22;
       public static float W_WIDTH = 70f*70;
       public static float W_HEIGHT = 70f*20;
     /*

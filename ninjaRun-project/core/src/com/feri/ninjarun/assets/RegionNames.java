@@ -9,11 +9,11 @@ public class RegionNames {
     //public static final String WHEEL = "wheel";
     //!!//public static final String NINJA = "skiier64";
 
-
     public static final String SKIER = "skiier64";
     public static final String TREE = "spruce128";
-    public static final String CHECKPOINT = "checkpoint";
+    //public static final String CHECKPOINT = "checkpoint";
     public static final String ROCK = "stone64";
+    public static final String SHURIKEN = "shuriken";
 
     private RegionNames() {
     }
