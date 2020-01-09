@@ -11,6 +11,7 @@ import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.DimensionComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;
+import com.feri.ninjarun.ecs.component.PositionComponent;
 import com.feri.ninjarun.ecs.component.SkierComponent;
 import com.feri.ninjarun.ecs.component.TransformComponent;
 
@@ -23,9 +24,10 @@ public class SkierInputSystem extends IteratingSystem {
             TransformComponent.class,
             DimensionComponent.class
     ).get();
-
+    float Speedup;
     public SkierInputSystem() {
         super(FAMILY);
+        Speedup = 0;
     }
 
     // we don't need to override update Iterating system method because there is no batch.begin/end
@@ -40,10 +42,13 @@ public class SkierInputSystem extends IteratingSystem {
         transform.newHeightMultiplier = 1f;
         dimension.height = GameConfig.SKIER_HEIGHT;
 
-        movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime;
+        //Movement speed increasing
+        Speedup += GameConfig.NINJA_INCREASE_SPEED_INTERVAL;
+
+        movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime + Speedup;
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED*2 * deltaTime;
+            movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             movement.xSpeed = -GameConfig.MAX_SKIER_X_SPEED * deltaTime;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

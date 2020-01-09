@@ -47,7 +47,7 @@ public class DebugCameraInfo {
     private static final int DEFAULT_LOG_KEY = Input.Keys.ENTER;
 
     //hitrost premikanja kamere v desno
-    private static final float FOLLOW_RUNNER = GameConfig.MAX_SKIER_X_SPEED;
+    //private static final float FOLLOW_RUNNER = GameConfig.MAX_SKIER_X_SPEED;
     private static final float DEFAULT_MOVE_SPEED = 80.0f;
     private static final float DEFAULT_ZOOM_SPEED = 2.0f;
     private static final float DEFAULT_MAX_ZOOM_IN = 0.25f;
@@ -113,7 +113,7 @@ public class DebugCameraInfo {
             resetKey = getInputKeyValue(root, RESET_KEY, DEFAULT_RESET_KEY);
             logKey = getInputKeyValue(root, LOG_KEY, DEFAULT_LOG_KEY);
 
-            followRunner = root.getFloat(RUNNER_SPEED, FOLLOW_RUNNER);
+            //followRunner = root.getFloat(RUNNER_SPEED, FOLLOW_RUNNER);
 
         } catch (Exception e) {
             log.error("Error loading " + FILE_PATH + " using defaults.", e);
@@ -137,7 +137,7 @@ public class DebugCameraInfo {
         resetKey = DEFAULT_RESET_KEY;
         logKey = DEFAULT_LOG_KEY;
 
-        followRunner = FOLLOW_RUNNER;
+        //followRunner = FOLLOW_RUNNER;
     }
 
     // == public methods ==

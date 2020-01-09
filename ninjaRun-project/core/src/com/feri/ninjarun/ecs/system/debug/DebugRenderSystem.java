@@ -32,7 +32,7 @@ public class DebugRenderSystem extends IteratingSystem {
 
         viewport.apply();
         renderer.setColor(Color.RED);
-        renderer.setProjectionMatrix(viewport.getCamera().combined);
+        //renderer.setProjectionMatrix(viewport.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
 
         // calls processEntity internally in for loop

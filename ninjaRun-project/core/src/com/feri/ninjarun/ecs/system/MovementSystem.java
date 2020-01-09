@@ -3,6 +3,7 @@ package com.feri.ninjarun.ecs.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.GravityComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;

@@ -2,7 +2,6 @@ package com.feri.ninjarun.assets;
 
 
 import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -48,9 +47,11 @@ public class AssetDescriptors {
             new AssetDescriptor<Music>(AssetPaths.CAR_LOOP_MUSIC, Music.class);
      */
 
-    //public static final AssetDescriptor<TiledMap> TILES =
-    //        new AssetDescriptor<TiledMap>(AssetPaths.TILES, TiledMap.class);
+    public static final AssetDescriptor<TiledMap> TILES1 =
+            new AssetDescriptor<TiledMap>(AssetPaths.TILES1, TiledMap.class);
 
+    //public static final AssetDescriptor<TiledMap> TILES0 =
+    //        new AssetDescriptor<TiledMap>(AssetPaths.TILES0, TiledMap.class);
     /*
     public static final AssetDescriptor<TextureAtlas> UI_ATLAS =
             new AssetDescriptor<TextureAtlas>(AssetPaths.GAME_UISKIN_ATLAS, TextureAtlas.class);

@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.GravityComponent;
+import com.feri.ninjarun.ecs.component.GroundComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;
 import com.feri.ninjarun.ecs.component.PositionComponent;

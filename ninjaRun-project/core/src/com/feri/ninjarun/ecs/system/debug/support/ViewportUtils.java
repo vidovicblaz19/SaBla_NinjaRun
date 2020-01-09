@@ -79,8 +79,8 @@ public class ViewportUtils {
 
         // draw world bounds
         renderer.setColor(Color.GREEN);
-        renderer.line(0, worldHeight, worldWidth, worldHeight);
-        renderer.line(worldWidth, 0, worldWidth, worldHeight);
+        renderer.line(0, worldHeight+70f*2, worldWidth, worldHeight+70f*2);
+        renderer.line(worldWidth, 0, worldWidth, worldHeight+70f*2);
 
         renderer.end();
         renderer.setColor(oldColor);

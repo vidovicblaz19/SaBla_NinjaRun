@@ -19,6 +19,7 @@ import com.feri.ninjarun.ecs.component.TextureComponent;
 import com.feri.ninjarun.ecs.component.TransformComponent;
 import com.feri.ninjarun.ecs.component.WorldWrapComponent;
 import com.feri.ninjarun.ecs.component.ZOrderComponent;
+import com.feri.ninjarun.ecs.system.debug.support.ViewportUtils;
 
 public class EntityFactorySystem extends EntitySystem {
 
@@ -50,21 +51,21 @@ public class EntityFactorySystem extends EntitySystem {
 
     public Entity createSkier() {
         PositionComponent position = engine.createComponent(PositionComponent.class);
-        position.x = 100f;
+        position.x = 70f*5;
+        position.y = 70f*16;
 
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
         dimension.width = GameConfig.SKIER_WIDTH;
         dimension.height = GameConfig.SKIER_HEIGHT;
 
         BoundsComponent bounds = engine.createComponent(BoundsComponent.class);
-        bounds.rectangle.setPosition(position.x, position.y);
+        bounds.rectangle.setPosition(position.x*2, position.y);
         bounds.rectangle.setSize(dimension.width, dimension.height);
 
         MovementComponentXYR movement = engine.createComponent(MovementComponentXYR.class);
         //
         GravityComponent gravity = engine.createComponent(GravityComponent.class);
         TransformComponent transform = engine.createComponent(TransformComponent.class);
-        transform.newHeightMultiplier = 0.5f;
 
         SkierComponent rocket = engine.createComponent(SkierComponent.class);
 

@@ -9,12 +9,12 @@ public class GameManager {
     private Preferences PREFS;
     public static final GameManager INSTANCE = new GameManager();
     int result;
-    //int health;
+    int health;
     int jumpCounter;
 
     public void resetResult() {
         result = 0;
-        //health = 50;
+        health = 50;
         jumpCounter = 0;
     }
 
@@ -35,14 +35,14 @@ public class GameManager {
     }
 
     public void damage() {
-        //health--;
-        //if (health == 0) {
-        //    if (result > getBestResult()) setBestResult(result);
-        //}
+        health--;
+        if (health == 0) {
+            if (result > getBestResult()) setBestResult(result);
+        }
     }
 
     public int getHealth() {
-        return 20;
+        return health;
     }
 
     public void incResult() {

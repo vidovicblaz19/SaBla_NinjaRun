@@ -11,14 +11,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.NinjaRun;
 import com.feri.ninjarun.assets.AssetDescriptors;
+import com.feri.ninjarun.assets.AssetPaths;
 import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.system.BoundsSystem;
+import com.feri.ninjarun.ecs.system.CameraMovementSystem;
 import com.feri.ninjarun.ecs.system.CleanUpSystem;
 import com.feri.ninjarun.ecs.system.CollisionSystem;
 import com.feri.ninjarun.ecs.system.GravitySystem;
@@ -34,6 +37,7 @@ import com.feri.ninjarun.ecs.system.debug.GridRenderSystem;
 import com.feri.ninjarun.ecs.system.passive.EntityFactorySystem;
 import com.feri.ninjarun.ecs.system.passive.SoundSystem;
 import com.feri.ninjarun.ecs.system.passive.StartUpSystem;
+import com.feri.ninjarun.ecs.system.passive.TiledSystem;
 import com.feri.ninjarun.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
@@ -50,6 +54,7 @@ public class GameScreen extends ScreenAdapter {
     private PooledEngine engine; //main ECS class
     private BitmapFont font;
     private boolean debug;
+    TiledMap map1;
 
     public GameScreen(NinjaRun game) {
         this.game = game;
@@ -60,6 +65,8 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        map1 = assetManager.get(AssetPaths.TILES1); //Rethink add with manager?
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WIDTH, GameConfig.HEIGHT, camera);
         hudViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -68,28 +75,32 @@ public class GameScreen extends ScreenAdapter {
         engine = new PooledEngine();
         engine.addSystem(new EntityFactorySystem(assetManager));
         engine.addSystem(new SoundSystem(assetManager));
+        engine.addSystem(new TiledSystem(map1));
+
+        engine.addSystem(new BoundsSystem());
+        //engine.addSystem(new PlayerControlSystem());
+        engine.addSystem(new WorldWrapSystem());
+        engine.addSystem(new MovementSystem());
+        engine.addSystem(new CollisionSystem());
+        //-----
+        engine.addSystem(new GravitySystem());
+        engine.addSystem(new SkierInputSystem());
+        engine.addSystem(new CameraMovementSystem());
+        engine.addSystem(new RenderSystem(batch, viewport));
+        engine.addSystem(new StartUpSystem());
+        engine.addSystem(new CleanUpSystem());
+        engine.addSystem(new HUDRenderSystem(batch, hudViewport, font));
 
         if (debug) {
             engine.addSystem(new GridRenderSystem(viewport, renderer));
             engine.addSystem(new DebugCameraSystem(
-                    GameConfig.WIDTH / 2, GameConfig.HEIGHT / 2, //center
+                    GameConfig.POSITION_X+ 70f*25, GameConfig.POSITION_Y+ 70f*12, //center
                     camera
             ));
             engine.addSystem(new DebugRenderSystem(viewport, renderer));
             engine.addSystem(new DebugInputSystem());
         }
-        engine.addSystem(new BoundsSystem());
-        //engine.addSystem(new PlayerControlSystem());
-        engine.addSystem(new WorldWrapSystem());
-        engine.addSystem(new MovementSystem());
-        //-----
-        engine.addSystem(new GravitySystem());
-        engine.addSystem(new SkierInputSystem());
-        engine.addSystem(new RenderSystem(batch, viewport));
-        engine.addSystem(new StartUpSystem());
-        engine.addSystem(new CleanUpSystem());
-        engine.addSystem(new CollisionSystem());
-        engine.addSystem(new HUDRenderSystem(batch, hudViewport, font));
+
         GameManager.INSTANCE.resetResult();
         printEngine();
     }

@@ -21,6 +21,12 @@ public final class Mappers {
     public static final ComponentMapper<TransformComponent> TRANSFORM =
             ComponentMapper.getFor(TransformComponent.class);
 
+    public static final ComponentMapper<GroundComponent> GROUND =
+            ComponentMapper.getFor(GroundComponent.class);
+
+    public static final ComponentMapper<ObstacleComponent> OBSTACLE =
+            ComponentMapper.getFor(ObstacleComponent.class);
+
     public static final ComponentMapper<TextureComponent> TEXTURE =
             ComponentMapper.getFor(TextureComponent.class);
 
