@@ -44,6 +44,7 @@ public class SkierInputSystem extends IteratingSystem {
 
         //Movement speed increasing
         Speedup += GameConfig.NINJA_INCREASE_SPEED_INTERVAL;
+        GameManager.INSTANCE.incResult();
 
         movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime + Speedup;
 

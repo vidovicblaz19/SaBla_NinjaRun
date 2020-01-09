@@ -67,7 +67,7 @@ public class CollisionSystem extends EntitySystem {
                     //soundSystem.pick();
                     if(firstPosition.y <= secondBounds.rectangle.height){
                         firstMovement.ySpeed = 0;
-                        firstPosition.y = secondBounds.rectangle.height;
+                        firstPosition.y = secondBounds.rectangle.y + secondBounds.rectangle.height;
                         GameManager.INSTANCE.setJumpCounter(0);
                     }
 

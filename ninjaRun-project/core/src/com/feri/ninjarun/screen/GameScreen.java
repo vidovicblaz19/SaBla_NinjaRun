@@ -108,7 +108,11 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) GameManager.INSTANCE.resetResult();
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) { //resetam vse na zacetek
+            GameManager.INSTANCE.resetResult();
+            log.debug("pritisnjen rrrrr");
+
+        }
         GdxUtils.clearScreen();
         if (GameManager.INSTANCE.isGameOver())
             engine.update(0);
