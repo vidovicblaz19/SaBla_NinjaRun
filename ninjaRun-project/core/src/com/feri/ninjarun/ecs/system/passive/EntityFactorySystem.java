@@ -101,10 +101,10 @@ public class EntityFactorySystem extends EntitySystem {
     public void createShuriken() {
         PositionComponent position = engine.createComponent(PositionComponent.class);
         float min = 11;
-        float max = 18;
+        float max = 17;
 
         //position.x = GameConfig.W_WIDTH;
-        position.x = GameConfig.POSITION_X*2;
+        position.x = GameConfig.POSITION_X+70f*30;
         position.y = 70f*MathUtils.floor(MathUtils.random(min, max)) + 9;
 
         MovementComponentXYR movementComponent = engine.createComponent(MovementComponentXYR.class);

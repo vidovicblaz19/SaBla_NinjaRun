@@ -23,7 +23,7 @@ public class GameConfig {
     public static final float GRAVITY = 24f; //m/s2
     public static final float JUMP_SPEED = 70f*10f; //m/s2
     public static float NINJA_INCREASE_SPEED_INTERVAL = 0.007f;
-    public static final float SHURIKEN_SPAWN_TIME = 1f;
+    public static float SHURIKEN_SPAWN_TIME = 0.93f;
     public static final float TREE_SPEED_X_MIN = 3f;
     public static final float ROCK_SPAWN_TIME = 1.2f;
     public static final float ROCK_SPEED_X_MIN = 3.8f;
