@@ -19,11 +19,11 @@ public class GameConfig {
     public static final float ROCK_HEIGHT_MIN = 16f;
     public static final float ROCK_WIDTH_MAX = 32f;
     public static final float ROCK_HEIGHT_MAX = 32f;
-    public static final float MAX_SKIER_X_SPEED = 70f*6;
+    public static final float MAX_SKIER_X_SPEED = 70f*8;
     public static final float GRAVITY = 24f; //m/s2
     public static final float JUMP_SPEED = 70f*10f; //m/s2
     public static float NINJA_INCREASE_SPEED_INTERVAL = 0.007f;
-    public static float SHURIKEN_SPAWN_TIME = 0.93f;
+    public static float SHURIKEN_SPAWN_TIME = 1.1f;
     public static final float TREE_SPEED_X_MIN = 3f;
     public static final float ROCK_SPAWN_TIME = 1.2f;
     public static final float ROCK_SPEED_X_MIN = 3.8f;

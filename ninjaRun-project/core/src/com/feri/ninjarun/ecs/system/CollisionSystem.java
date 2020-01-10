@@ -90,7 +90,7 @@ public class CollisionSystem extends EntitySystem {
                 if (Intersector.overlaps(firstBounds.rectangle, secondBounds.rectangle)) {
                     //groundComponent.hit = true;
                     GameManager.INSTANCE.damage();
-                    soundSystem.pick();
+                    //soundSystem.pick();
 
                 }
             }
@@ -104,7 +104,7 @@ public class CollisionSystem extends EntitySystem {
                 if (Intersector.overlaps(firstBounds.rectangle, secondBounds.rectangle)) {
                     //groundComponent.hit = true;
                     GameManager.INSTANCE.damage();
-                    soundSystem.pick();
+                    //soundSystem.pick();
                 }
                 if(GameManager.INSTANCE.isGameOver() || GameManager.INSTANCE.isGameWon()){
                     MovementComponentXYR secondMovement = Mappers.MOVEMENT.get(shuriken);

@@ -2,6 +2,7 @@ package com.feri.ninjarun;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.feri.ninjarun.config.GameConfig;
 
 public class GameManager {
     private static final String RESULT_BEST = "BEST_RESULT";
@@ -24,7 +25,7 @@ public class GameManager {
         return getHealth() <= 0;
     }
     public boolean isGameWon() {
-        if(getHealth() > 0 && result > 5540){
+        if(getHealth() > 0 && GameConfig.POSITION_X >= 2098*70f){
             if (result > getBestResult()) setBestResult(result);
             return true;
         }

@@ -122,6 +122,7 @@ public class GameScreen extends ScreenAdapter {
             engine.update(0);}
         else{
             engine.update(delta);
+            log.debug("posx = " + GameConfig.POSITION_X);
         }
 
         // if (GameManager.INSTANCE.isGameOver()) {

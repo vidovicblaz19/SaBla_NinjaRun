@@ -31,6 +31,7 @@ public class NinjaRun extends Game {
 		assetManager.load(AssetDescriptors.GAME_PLAY);
 		assetManager.load(AssetDescriptors.PICK_SOUND);
 		assetManager.load(AssetDescriptors.TILES1);
+		assetManager.load(AssetDescriptors.BACKGROUND);
 		//assetManager.load(AssetDescriptors.TILES0);
 		assetManager.finishLoading();
 		setScreen(new GameScreen(this));

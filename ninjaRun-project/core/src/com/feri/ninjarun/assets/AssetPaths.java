@@ -10,6 +10,7 @@ public class AssetPaths {
     public static String GAME_UISKIN = "ui/uiskin.json";
     public static final String GAME_UISKIN_ATLAS = "ui/uiskin.atlas";
     public static final String TILES1 = "tiles/ninjaMap1.tmx";
+    public static final String BACKGROUND = "background/city0.png";
     //public static final String TILES0 = "tiles/ninjaMap0.tmx";
     //public static final String TILES1 = "tiles/car.tmx";
 
