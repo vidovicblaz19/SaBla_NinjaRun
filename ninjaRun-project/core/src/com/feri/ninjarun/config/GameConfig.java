@@ -28,6 +28,8 @@ public class GameConfig {
     public static float POSITION_Y=0;
     public static boolean ISSLIDE = false;
     public static boolean ISJUMP = false;
+    public static int SERVER_MSG_JUMP = 0;
+    public static int SERVER_MSG_SLIDE = 0;
     private GameConfig() {
     }
 }

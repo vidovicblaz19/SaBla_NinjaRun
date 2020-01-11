@@ -85,18 +85,20 @@ public class SkierInputSystem extends IteratingSystem {
 
         movement.xSpeed = GameConfig.MAX_SKIER_X_SPEED * deltaTime + Speedup;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || swipeUp/*|| Gdx.input.justTouched()*/) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || swipeUp/*|| Gdx.input.justTouched()*/ || GameConfig.SERVER_MSG_JUMP >0) {
             if (GameManager.INSTANCE.getJumpCounter() < 2) {
                 movement.ySpeed = GameConfig.JUMP_SPEED * deltaTime;
                 GameManager.INSTANCE.incJumpCounter();
                 swipeUp = false;
                 GameConfig.ISJUMP = true;
+                GameConfig.SERVER_MSG_JUMP--;
             }
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || swipeDown) {
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || swipeDown || GameConfig.SERVER_MSG_SLIDE > 0) {
             transform.newHeightMultiplier = GameConfig.NINJA_HEIGHT_TRANSFORM_MULTIPLIER;
             //dimension.height = GameConfig.NINJA_HEIGHT * transform.newHeightMultiplier;
             GameConfig.ISSLIDE = true;
+            GameConfig.SERVER_MSG_SLIDE--;
 
             Timer.schedule(new Timer.Task(){    //for android controls
                 @Override
