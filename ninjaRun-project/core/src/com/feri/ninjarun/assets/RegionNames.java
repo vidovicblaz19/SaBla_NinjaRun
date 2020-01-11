@@ -14,6 +14,9 @@ public class RegionNames {
     //public static final String CHECKPOINT = "checkpoint";
     public static final String ROCK = "stone64";
     public static final String SHURIKEN = "shuriken";
+    public static final String NINJA_RUNNING_ANIM = "Run_";
+    public static final String NINJA_JUMP_ANIM = "Jump_";
+    public static final String NINJA_SLIDE_ANIM = "Slide_";
 
     private RegionNames() {
     }

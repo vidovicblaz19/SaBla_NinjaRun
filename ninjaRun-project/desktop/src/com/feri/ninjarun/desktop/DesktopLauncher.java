@@ -7,8 +7,8 @@ import com.feri.ninjarun.NinjaRun;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.height=800;
-		config.y = 0;
+		config.height=700;
+		config.y = 50;
 		config.x = 20;
 		config.width = 1400;
 		new LwjglApplication(new NinjaRun(), config);

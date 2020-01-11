@@ -8,6 +8,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
 import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.NinjaRun;
+import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.BoundsComponent;
 import com.feri.ninjarun.ecs.component.GroundComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
@@ -75,6 +76,7 @@ public class CollisionSystem extends EntitySystem {
                         firstMovement.ySpeed = 0;
                         firstPosition.y = secondBounds.rectangle.y + secondBounds.rectangle.height;
                         GameManager.INSTANCE.setJumpCounter(0);
+                        GameConfig.ISJUMP = false;
                     }
 
                 }

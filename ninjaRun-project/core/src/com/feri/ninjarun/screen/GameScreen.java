@@ -20,6 +20,7 @@ import com.feri.ninjarun.NinjaRun;
 import com.feri.ninjarun.assets.AssetDescriptors;
 import com.feri.ninjarun.assets.AssetPaths;
 import com.feri.ninjarun.config.GameConfig;
+import com.feri.ninjarun.ecs.system.AnimationModifierSystem;
 import com.feri.ninjarun.ecs.system.BoundsSystem;
 import com.feri.ninjarun.ecs.system.CameraMovementSystem;
 import com.feri.ninjarun.ecs.system.CleanUpSystem;
@@ -27,6 +28,7 @@ import com.feri.ninjarun.ecs.system.CollisionSystem;
 import com.feri.ninjarun.ecs.system.GravitySystem;
 import com.feri.ninjarun.ecs.system.HUDRenderSystem;
 import com.feri.ninjarun.ecs.system.MovementSystem;
+import com.feri.ninjarun.ecs.system.RenderAnimationSystem;
 import com.feri.ninjarun.ecs.system.RenderSystem;
 import com.feri.ninjarun.ecs.system.ResetRunnerSystem;
 import com.feri.ninjarun.ecs.system.ShurikenSpawnSystem;
@@ -43,7 +45,7 @@ import com.feri.ninjarun.ecs.system.passive.TiledSystem;
 import com.feri.ninjarun.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
-    private static final Logger log = new Logger(GameScreen.class.getSimpleName(), Logger.DEBUG);
+    public static final Logger log = new Logger(GameScreen.class.getSimpleName(), Logger.DEBUG);
 
     private final AssetManager assetManager;
     private final SpriteBatch batch;
@@ -55,14 +57,15 @@ public class GameScreen extends ScreenAdapter {
     private ShapeRenderer renderer;
     private PooledEngine engine; //main ECS class
     private BitmapFont font;
-    private boolean debug;
+    private BitmapFont bigfont;
+    //private boolean debug;
     TiledMap map1;
 
     public GameScreen(NinjaRun game) {
         this.game = game;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
-        debug = true;
+        //debug = true;
     }
 
     @Override
@@ -74,6 +77,7 @@ public class GameScreen extends ScreenAdapter {
         hudViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         renderer = new ShapeRenderer();
         font = assetManager.get(AssetDescriptors.FONT32);
+        bigfont = assetManager.get(AssetDescriptors.FONT96);
         engine = new PooledEngine();
         engine.addSystem(new EntityFactorySystem(assetManager));
         engine.addSystem(new SoundSystem(assetManager));
@@ -84,6 +88,7 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new ShurikenSpawnSystem());
+        engine.addSystem(new AnimationModifierSystem());
         engine.addSystem(new CollisionSystem());
         //-----
         engine.addSystem(new GravitySystem());
@@ -92,11 +97,12 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new ResetRunnerSystem());
 
         engine.addSystem(new RenderSystem(batch, viewport));
+        engine.addSystem(new RenderAnimationSystem(batch,viewport));
         engine.addSystem(new StartUpSystem());
         engine.addSystem(new CleanUpSystem());
-        engine.addSystem(new HUDRenderSystem(batch, hudViewport, font));
+        engine.addSystem(new HUDRenderSystem(batch, hudViewport, font,bigfont));
 
-        if (debug) {
+        if (GameConfig.debug) {
             engine.addSystem(new GridRenderSystem(viewport, renderer));
             engine.addSystem(new DebugCameraSystem(
                     GameConfig.POSITION_X+ 70f*25, GameConfig.POSITION_Y+ 70f*12, //center
@@ -122,7 +128,7 @@ public class GameScreen extends ScreenAdapter {
             engine.update(0);}
         else{
             engine.update(delta);
-            log.debug("posx = " + GameConfig.POSITION_X);
+            //log.debug("posx = " + GameConfig.POSITION_X);
         }
 
         // if (GameManager.INSTANCE.isGameOver()) {

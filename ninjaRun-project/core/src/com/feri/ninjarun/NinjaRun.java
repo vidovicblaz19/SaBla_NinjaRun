@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Logger;
 import com.feri.ninjarun.assets.AssetDescriptors;
+import com.feri.ninjarun.ecs.system.SkierInputSystem;
 import com.feri.ninjarun.ecs.system.debug.support.ViewportUtils;
 import com.feri.ninjarun.screen.GameScreen;
 
@@ -28,6 +29,7 @@ public class NinjaRun extends Game {
 
 		batch = new SpriteBatch();
 		assetManager.load(AssetDescriptors.FONT32);
+		assetManager.load(AssetDescriptors.FONT96);
 		assetManager.load(AssetDescriptors.GAME_PLAY);
 		assetManager.load(AssetDescriptors.PICK_SOUND);
 		assetManager.load(AssetDescriptors.TILES1);

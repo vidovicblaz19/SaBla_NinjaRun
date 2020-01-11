@@ -18,7 +18,10 @@ public class AssetDescriptors {
      */
 
     public static final AssetDescriptor<BitmapFont> FONT32 =
-            new AssetDescriptor<BitmapFont>(AssetPaths.UI_FONT32, BitmapFont.class);
+            new AssetDescriptor<BitmapFont>(AssetPaths.UI_FONT64, BitmapFont.class);
+
+    public static final AssetDescriptor<BitmapFont> FONT96 =
+            new AssetDescriptor<BitmapFont>(AssetPaths.UI_FONT96, BitmapFont.class);
 
     public static AssetDescriptor<Skin> GAME_UI =
             new AssetDescriptor<Skin>(AssetPaths.GAME_UISKIN, Skin.class);

@@ -5,11 +5,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.feri.ninjarun.assets.AssetDescriptors;
 import com.feri.ninjarun.assets.RegionNames;
 import com.feri.ninjarun.config.GameConfig;
+import com.feri.ninjarun.ecs.component.AnimationComponent;
 import com.feri.ninjarun.ecs.component.BoundsComponent;
 import com.feri.ninjarun.ecs.component.CleanUpComponent;
 import com.feri.ninjarun.ecs.component.DimensionComponent;
@@ -74,8 +77,14 @@ public class EntityFactorySystem extends EntitySystem {
 
         WorldWrapComponent worldWrap = engine.createComponent(WorldWrapComponent.class);
 
-        TextureComponent texture = engine.createComponent(TextureComponent.class);
-        texture.region = gamePlayAtlas.findRegion(RegionNames.SKIER);
+        AnimationComponent animation = engine.createComponent(AnimationComponent.class);
+        animation.region0 = new Animation<TextureRegion>(0.044f,gamePlayAtlas.findRegions(RegionNames.NINJA_RUNNING_ANIM), Animation.PlayMode.LOOP);
+        animation.region1 = new Animation<TextureRegion>(0.06f,gamePlayAtlas.findRegions(RegionNames.NINJA_SLIDE_ANIM), Animation.PlayMode.LOOP);
+        animation.region2 = new Animation<TextureRegion>(0.06f,gamePlayAtlas.findRegions(RegionNames.NINJA_JUMP_ANIM), Animation.PlayMode.NORMAL);
+        animation.region = animation.region0;
+        //namesto texture uporabi animacijo
+        //diceAnimation = new Animation(0.08f,gamePlayAtlas.findRegions(RegionNames.DICEANIM), Animation.PlayMode.LOOP);
+
 
         ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
         zOrder.z = SKIER_Z_ORDER;
@@ -90,7 +99,7 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(transform);
         entity.add(rocket);
         entity.add(worldWrap);
-        entity.add(texture);
+        entity.add(animation);
         entity.add(zOrder);
 
         engine.addEntity(entity);

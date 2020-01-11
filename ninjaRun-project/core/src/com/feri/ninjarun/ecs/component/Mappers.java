@@ -33,6 +33,9 @@ public final class Mappers {
     public static final ComponentMapper<TextureComponent> TEXTURE =
             ComponentMapper.getFor(TextureComponent.class);
 
+    public static final ComponentMapper<AnimationComponent> ANIMATION =
+            ComponentMapper.getFor(AnimationComponent.class);
+
     public static final ComponentMapper<ZOrderComponent> Z_ORDER =
             ComponentMapper.getFor(ZOrderComponent.class);
 

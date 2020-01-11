@@ -13,58 +13,40 @@ import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.assets.AssetPaths;
 import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.AnimationComponent;
-import com.feri.ninjarun.ecs.component.ZOrderComparator;
 import com.feri.ninjarun.ecs.component.DimensionComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.PositionComponent;
 import com.feri.ninjarun.ecs.component.TextureComponent;
+import com.feri.ninjarun.ecs.component.ZOrderComparator;
 import com.feri.ninjarun.ecs.component.ZOrderComponent;
 import com.feri.ninjarun.ecs.system.passive.TiledSystem;
 
-
-public class RenderSystem extends SortedIteratingSystem {
+public class RenderAnimationSystem extends SortedIteratingSystem {
 
     private static final Family FAMILY = Family.all(
             PositionComponent.class,
             DimensionComponent.class,
-            TextureComponent.class,
+            AnimationComponent.class,
             ZOrderComponent.class
     ).get();
 
     private final SpriteBatch batch;
     private final Viewport viewport;
-    TiledSystem tiledSystem;
-    Texture background = new Texture(AssetPaths.BACKGROUND); //added background
-    int srcx;
+    public float animationTime = 0;
 
-    public RenderSystem(SpriteBatch batch, Viewport viewport) {
+    public RenderAnimationSystem(SpriteBatch batch, Viewport viewport) {
         super(FAMILY, ZOrderComparator.INSTANCE);
         this.batch = batch;
         this.viewport = viewport;
-        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
 
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-        tiledSystem = engine.getSystem(TiledSystem.class);
     }
 
     @Override
     public void update(float deltaTime) { //override to avoid calling batch.begin/end for each entity
-        viewport.apply();
-        //temp
-        batch.begin();
-        //batch.draw(background, 0, 0,GameConfig.WIDTH/2,GameConfig.HEIGHT/1.8f);
-        batch.draw(background,0, 0, srcx , 0, Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight());
-        if(!GameManager.INSTANCE.isGameOver()) {
-                srcx += 1;
-        }
-        batch.end();
-
-        tiledSystem.renderTiledView((OrthographicCamera) viewport.getCamera(), GameConfig.POSITION_X, GameConfig.POSITION_Y);
-        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         super.update(deltaTime);
         batch.end();
@@ -74,9 +56,11 @@ public class RenderSystem extends SortedIteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         PositionComponent position = Mappers.POSITION.get(entity);
         DimensionComponent dimension = Mappers.DIMENSION.get(entity);
-        TextureComponent texture = Mappers.TEXTURE.get(entity);
+        AnimationComponent animation = Mappers.ANIMATION.get(entity);
 
-        batch.draw(texture.region,
+        animationTime += deltaTime;
+
+        batch.draw(animation.region.getKeyFrame(animationTime),
                 position.x, position.y,
                 dimension.width / 2, dimension.height / 2,
                 dimension.width, dimension.height,

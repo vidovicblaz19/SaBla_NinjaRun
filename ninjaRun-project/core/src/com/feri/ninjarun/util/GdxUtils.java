@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 public class GdxUtils {
 
     public static void clearScreen() {
-        clearScreen(Color.WHITE);
+        clearScreen(Color.BLACK);
     }
 
     public static void clearScreen(Color color) {

@@ -11,17 +11,19 @@ import com.feri.ninjarun.GameManager;
 
 public class HUDRenderSystem extends EntitySystem {
 
-    private static final float PADDING = 20.0f;
+    private static final float PADDING = 70.0f;
 
     private final SpriteBatch batch;
     private final Viewport hudViewport;
     private final BitmapFont font;
+    private final BitmapFont bigfont;
     private final GlyphLayout layout = new GlyphLayout();
 
-    public HUDRenderSystem(SpriteBatch batch, Viewport hudViewport, BitmapFont font) {
+    public HUDRenderSystem(SpriteBatch batch, Viewport hudViewport, BitmapFont font, BitmapFont bigfont) {
         this.batch = batch;
         this.hudViewport = hudViewport;
         this.font = font;
+        this.bigfont = bigfont;
     }
 
     // we use EntitySystem
@@ -42,30 +44,30 @@ public class HUDRenderSystem extends EntitySystem {
 
         String scoreString = "SCORE: " + GameManager.INSTANCE.getResult();
         layout.setText(font, scoreString);
-        float scoreX = hudViewport.getWorldWidth() - layout.width;
+        float scoreX = hudViewport.getWorldWidth() - layout.width - PADDING;
         font.draw(batch, layout, scoreX, y);
 
         // health
-        String healthString = "HEALTH: " + GameManager.INSTANCE.getHealth();
-        layout.setText(font, healthString);
-        float healthX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
+        //String healthString = "HEALTH: " + GameManager.INSTANCE.getHealth();
+        //layout.setText(font, healthString);
+        //float healthX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
 
-        font.draw(batch, layout, healthX, y);
+        //font.draw(batch, layout, healthX, y);
 
         if (GameManager.INSTANCE.isGameOver()) {
-            font.setColor(Color.RED);
-            layout.setText(font, "The END");
+            bigfont.setColor(Color.BLACK);
+            layout.setText(bigfont, "The END");
             float endX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
             float endY = (hudViewport.getWorldHeight() + layout.height) / 2 - layout.height;
-            font.draw(batch, layout, endX, endY);
+            bigfont.draw(batch, layout, endX, endY);
         }
 
         if(GameManager.INSTANCE.isGameWon()){
-            font.setColor(Color.GREEN);
-            layout.setText(font, "WINNER! You made it to the end!");
+            bigfont.setColor(Color.GREEN);
+            layout.setText(bigfont, "WINNER! You made it to the end!");
             float endX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
             float endY = (hudViewport.getWorldHeight() + layout.height) / 2 - layout.height;
-            font.draw(batch, layout, endX, endY);
+            bigfont.draw(batch, layout, endX, endY);
         }
 
         batch.end();
