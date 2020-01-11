@@ -13,6 +13,8 @@ import com.feri.ninjarun.assets.AssetDescriptors;
 import com.feri.ninjarun.ecs.system.SkierInputSystem;
 import com.feri.ninjarun.ecs.system.debug.support.ViewportUtils;
 import com.feri.ninjarun.screen.GameScreen;
+import com.feri.ninjarun.screen.IntroScreen;
+import com.feri.ninjarun.screen.LoginScreen;
 
 public class NinjaRun extends Game {
 	private AssetManager assetManager;
@@ -36,8 +38,13 @@ public class NinjaRun extends Game {
 		assetManager.load(AssetDescriptors.BACKGROUND);
 		//assetManager.load(AssetDescriptors.TILES0);
 		assetManager.finishLoading();
-		setScreen(new GameScreen(this));
+		//setScreen(new GameScreen(this));
+		selectIntroScreen();
 	}
+
+	public void selectGameScreen() {setScreen(new GameScreen(this));}
+	public void selectIntroScreen() {setScreen(new IntroScreen(this));}
+	public void selectLoginScreen() {setScreen(new LoginScreen(this));}
 
 	@Override
 	public void dispose() {

@@ -7,22 +7,24 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Timer;
 import com.feri.ninjarun.GameManager;
-import com.feri.ninjarun.NinjaRun;
 import com.feri.ninjarun.config.GameConfig;
 import com.feri.ninjarun.ecs.component.BoundsComponent;
 import com.feri.ninjarun.ecs.component.DimensionComponent;
 import com.feri.ninjarun.ecs.component.Mappers;
 import com.feri.ninjarun.ecs.component.MovementComponentXYR;
 import com.feri.ninjarun.ecs.component.PositionComponent;
-import com.feri.ninjarun.ecs.component.ShurikenComponent;
 import com.feri.ninjarun.ecs.component.SkierComponent;
 import com.feri.ninjarun.ecs.component.TransformComponent;
-import com.feri.ninjarun.screen.GameScreen;
-import com.feri.ninjarun.util.GdxUtils;
 import com.feri.ninjarun.util.SimpleDirectionGestureDetector;
+
+import static com.feri.ninjarun.screen.GameScreen.backButton;
+import static com.feri.ninjarun.screen.GameScreen.im;
+import static com.feri.ninjarun.screen.GameScreen.retryButton;
 
 
 public class SkierInputSystem extends IteratingSystem {
@@ -38,11 +40,12 @@ public class SkierInputSystem extends IteratingSystem {
     boolean swipeDown;  //android controls
     boolean swipeUp;    //android controls
     Timer slide = new Timer();
+
     public SkierInputSystem() {
         super(FAMILY);
         Speedup = 0;
 
-        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
+        im.addProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
                 swipeUp = true;
@@ -59,6 +62,7 @@ public class SkierInputSystem extends IteratingSystem {
             public void onDown() {
                 swipeDown = true;
             }
+
         }));
     }
 
@@ -73,7 +77,7 @@ public class SkierInputSystem extends IteratingSystem {
         BoundsComponent bounds = Mappers.BOUNDS.get(entity);
 
         transform.newHeightMultiplier = 1f;
-        //dimension.height = GameConfig.SKIER_HEIGHT;
+        //dimension.height = GameConfig.NINJA_HEIGHT;
         GameConfig.ISSLIDE = false;
 
         //Movement speed increasing
@@ -90,8 +94,8 @@ public class SkierInputSystem extends IteratingSystem {
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || swipeDown) {
-            transform.newHeightMultiplier = GameConfig.SKIER_HEIGHT_TRANSFORM_MULTIPLIER;
-            //dimension.height = GameConfig.SKIER_HEIGHT * transform.newHeightMultiplier;
+            transform.newHeightMultiplier = GameConfig.NINJA_HEIGHT_TRANSFORM_MULTIPLIER;
+            //dimension.height = GameConfig.NINJA_HEIGHT * transform.newHeightMultiplier;
             GameConfig.ISSLIDE = true;
 
             Timer.schedule(new Timer.Task(){    //for android controls

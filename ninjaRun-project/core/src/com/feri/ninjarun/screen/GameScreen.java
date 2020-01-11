@@ -5,6 +5,8 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,8 +14,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.feri.ninjarun.GameManager;
 import com.feri.ninjarun.NinjaRun;
@@ -44,7 +54,7 @@ import com.feri.ninjarun.ecs.system.passive.StartUpSystem;
 import com.feri.ninjarun.ecs.system.passive.TiledSystem;
 import com.feri.ninjarun.util.GdxUtils;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends ScreenAdapter implements InputProcessor {
     public static final Logger log = new Logger(GameScreen.class.getSimpleName(), Logger.DEBUG);
 
     private final AssetManager assetManager;
@@ -61,6 +71,17 @@ public class GameScreen extends ScreenAdapter {
     //private boolean debug;
     TiledMap map1;
 
+
+    /////////
+    private Stage stage;
+    private Skin skin;
+
+    private Table table;
+    public static TextButton retryButton;
+    public static TextButton backButton;
+
+    public static InputMultiplexer im;
+
     public GameScreen(NinjaRun game) {
         this.game = game;
         assetManager = game.getAssetManager();
@@ -70,6 +91,45 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        //------Ui buttons ingame-------//
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        stage = new Stage(new ScreenViewport());
+
+        table = new Table();
+        table.setWidth(stage.getWidth());
+        table.align(Align.center| Align.top);
+
+        table.setPosition(0, Gdx.graphics.getHeight());
+
+        retryButton = new TextButton("Retry", skin);
+        backButton = new TextButton("Back",skin);
+
+
+        retryButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //GameManager.INSTANCE.resetResult();
+                GameConfig.restartGame = true;
+            }
+        });
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.selectIntroScreen();
+            }
+        });
+
+        table.padTop(30);
+        table.add(retryButton).padBottom(10).padRight(40);
+        table.add(backButton).padBottom(10).padLeft(40);
+
+        stage.addActor(table);
+
+        im = new InputMultiplexer(stage, this);
+        Gdx.input.setInputProcessor(im);
+        //--------//
+
         map1 = assetManager.get(AssetPaths.TILES1); //Rethink add with manager?
 
         camera = new OrthographicCamera();
@@ -116,12 +176,18 @@ public class GameScreen extends ScreenAdapter {
         printEngine();
     }
 
+    int tmp = 0;
     @Override
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) { //resetam vse na zacetek
+        if (Gdx.input.isKeyPressed(Input.Keys.R) || GameConfig.restartGame) { //resetam vse na zacetek
             GameManager.INSTANCE.resetResult();
-
+            tmp++;
+            if(tmp>=2){
+                tmp = 0;
+                GameConfig.restartGame = false;
+            }
+            //GameConfig.restartGame = false;
         }
         GdxUtils.clearScreen();
         if (GameManager.INSTANCE.isGameOver()){
@@ -130,6 +196,10 @@ public class GameScreen extends ScreenAdapter {
             engine.update(delta);
             //log.debug("posx = " + GameConfig.POSITION_X);
         }
+
+
+        stage.act(delta);
+        stage.draw();
 
         // if (GameManager.INSTANCE.isGameOver()) {
         //     game.setScreen(new MenuScreen(game));
@@ -140,6 +210,7 @@ public class GameScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         hudViewport.update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -158,5 +229,45 @@ public class GameScreen extends ScreenAdapter {
         for (EntitySystem system:systems) {
             System.out.println(system.getClass().getSimpleName());
         }
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

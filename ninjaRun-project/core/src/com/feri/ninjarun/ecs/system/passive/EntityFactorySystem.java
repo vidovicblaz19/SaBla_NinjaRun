@@ -25,7 +25,6 @@ import com.feri.ninjarun.ecs.component.TextureComponent;
 import com.feri.ninjarun.ecs.component.TransformComponent;
 import com.feri.ninjarun.ecs.component.WorldWrapComponent;
 import com.feri.ninjarun.ecs.component.ZOrderComponent;
-import com.feri.ninjarun.ecs.system.debug.support.ViewportUtils;
 
 public class EntityFactorySystem extends EntitySystem {
 
@@ -61,8 +60,8 @@ public class EntityFactorySystem extends EntitySystem {
         position.y = 70f*16;
 
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
-        dimension.width = GameConfig.SKIER_WIDTH;
-        dimension.height = GameConfig.SKIER_HEIGHT;
+        dimension.width = GameConfig.NINJA_WIDTH;
+        dimension.height = GameConfig.NINJA_HEIGHT;
 
         BoundsComponent bounds = engine.createComponent(BoundsComponent.class);
         bounds.rectangle.setPosition(position.x*2, position.y);
