@@ -82,7 +82,7 @@ public class NinjaRun extends Game {
 				}
 				catch (JSONException e)
 				{
-					Gdx.app.log("SocketIO", "msg_err");
+					Gdx.app.log("SocketIO", "error while jumping (from server)");
 				}
 			}
 		}).on("slide", new Emitter.Listener() {
@@ -99,7 +99,24 @@ public class NinjaRun extends Game {
 				}
 				catch (JSONException e)
 				{
-					Gdx.app.log("SocketIO", "msg_err");
+					Gdx.app.log("SocketIO", "error while sliding (from server)");
+				}
+			}
+		}).on("money", new Emitter.Listener() {
+			@Override
+			public void call(Object... args) {
+				JSONObject data = (JSONObject) args[0];
+				try {
+					String money = data.getString("money");
+
+					GameConfig.MONEY = Integer.parseInt(money);
+					IntroScreen.money.setText("Money: " + money);
+					Gdx.app.log("SocketIO", "Money: " + money);
+
+				}
+				catch (JSONException e)
+				{
+					Gdx.app.log("SocketIO", "error getting money (from server)");
 				}
 			}
 		});

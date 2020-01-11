@@ -30,6 +30,7 @@ public class GameConfig {
     public static boolean ISJUMP = false;
     public static int SERVER_MSG_JUMP = 0;
     public static int SERVER_MSG_SLIDE = 0;
+    public static int MONEY = 0;
     private GameConfig() {
     }
 }

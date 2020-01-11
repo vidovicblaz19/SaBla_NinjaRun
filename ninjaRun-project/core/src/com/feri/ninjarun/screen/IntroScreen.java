@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -35,6 +36,7 @@ public class IntroScreen extends ScreenAdapter implements InputProcessor {
     private TextButton startGameButton;
     private TextButton loginButton;
     private TextButton quitButton;
+    public static Label money;
     private SpriteBatch batch;
     private Sprite sprite;
     private Viewport viewport;
@@ -60,6 +62,7 @@ public class IntroScreen extends ScreenAdapter implements InputProcessor {
         startGameButton = new TextButton("New game", skin);
         loginButton = new TextButton("Log in",skin);
         quitButton = new TextButton("Quit game",skin);
+        money = new Label("Money: " + GameConfig.MONEY, skin);
 
         startGameButton.addListener(new ClickListener(){
             @Override
@@ -82,7 +85,9 @@ public class IntroScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
-        table.padTop(100);
+        table.add(money).padTop(10);
+        table.row();
+        table.padTop(90);
         table.add(startGameButton).padBottom(10);
         table.row();
         table.add(loginButton).padBottom(10);
