@@ -124,7 +124,7 @@ public class NinjaRun extends Game {
 
 	public void selectGameScreen() {setScreen(new GameScreen(this));}
 	public void selectIntroScreen() {setScreen(new IntroScreen(this));}
-	public void selectLoginScreen() {setScreen(new LoginScreen(this));}
+	public void selectLoginScreen() {Gdx.net.openURI(GameConfig.SERVER_NAME + GameConfig.SERVER_PORT);/*setScreen(new LoginScreen(this));*/}
 
 	@Override
 	public void dispose() {
