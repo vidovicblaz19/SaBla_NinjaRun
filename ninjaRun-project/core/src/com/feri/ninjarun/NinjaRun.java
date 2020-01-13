@@ -5,9 +5,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Logger;
 import com.feri.ninjarun.assets.AssetDescriptors;
 import com.feri.ninjarun.config.GameConfig;
@@ -18,6 +20,11 @@ import com.feri.ninjarun.screen.IntroScreen;
 import com.feri.ninjarun.screen.LoginScreen;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -27,10 +34,20 @@ public class NinjaRun extends Game {
 	private SpriteBatch batch;
 	private Socket socket;
 
+	private final List<Toast> toasts = new LinkedList<Toast>();
+	private Toast.ToastFactory toastFactory;
+
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		ViewportUtils.DEFAULT_CELL_SIZE = 70;
+
+		Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		BitmapFont font = skin.getFont("default-font");
+		font.getData().setScale(0.5f);
+
+		// create factory
+		toastFactory = new Toast.ToastFactory.Builder().font(font).build();
 
 		connectSocket();
 		configSocketEvents();
@@ -60,6 +77,14 @@ public class NinjaRun extends Game {
 		catch (Exception e){
 			System.out.println(e);
 		}
+	}
+
+	public void toastLong(String text) {
+		toasts.add(toastFactory.create(text, Toast.Length.LONG));
+	}
+
+	public void toastShort(String text) {
+		toasts.add(toastFactory.create(text, Toast.Length.SHORT));
 	}
 
 	private void configSocketEvents() {
@@ -119,12 +144,50 @@ public class NinjaRun extends Game {
 					Gdx.app.log("SocketIO", "error getting money (from server)");
 				}
 			}
+		}).on("port", new Emitter.Listener() {
+			@Override
+			public void call(Object... args) {
+				JSONObject data = (JSONObject) args[0];
+				try {
+					String port = data.getString("port");
+
+					GameConfig.SERVER_PORT = port;
+					Gdx.app.log("SocketIO", "Server Port: " + port);
+
+				}
+				catch (JSONException e)
+				{
+					Gdx.app.log("SocketIO", "error getting port (from server)");
+				}
+			}
 		});
 	}
 
 	public void selectGameScreen() {setScreen(new GameScreen(this));}
 	public void selectIntroScreen() {setScreen(new IntroScreen(this));}
-	public void selectLoginScreen() {Gdx.net.openURI(GameConfig.SERVER_NAME + GameConfig.SERVER_PORT);/*setScreen(new LoginScreen(this));*/}
+	public void selectLoginScreen() {
+		if(!GameConfig.SERVER_PORT.equals(""))
+			Gdx.net.openURI(GameConfig.SERVER_NAME + GameConfig.SERVER_PORT);
+		else{
+			Gdx.app.log("SocketIO", "Server not running");
+			toastShort("Server not running!");
+		}
+	}
+
+	@Override
+	public void render() {
+		super.render();
+
+		Iterator<Toast> it = toasts.iterator();
+		while(it.hasNext()) {
+			Toast t = it.next();
+			if (!t.render(Gdx.graphics.getDeltaTime())) {
+				it.remove();
+			} else {
+				break;
+			}
+		}
+	}
 
 	@Override
 	public void dispose() {

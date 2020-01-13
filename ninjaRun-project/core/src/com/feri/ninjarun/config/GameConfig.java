@@ -32,7 +32,7 @@ public class GameConfig {
     public static int SERVER_MSG_SLIDE = 0;
     public static int MONEY = 0;
     public static String SERVER_NAME = "http://192.168.0.102:";
-    public static String SERVER_PORT = "3000";
+    public static String SERVER_PORT = "";
     private GameConfig() {
     }
 }
